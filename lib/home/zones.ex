@@ -5,11 +5,11 @@ defmodule Home.Zones do
     GenServer.start_link(__MODULE__, nil, opts)
   end
 
-  def get(pid) do
+  def get(pid \\ __MODULE__) do
     GenServer.call(pid, :get)
   end
 
-  def handle_message(pid, event, payload) do
+  def handle_message(pid \\ __MODULE__, event, payload) do
     GenServer.call(pid, {:handle_message, event, payload})
   end
 
