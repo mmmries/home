@@ -1,1 +1,5 @@
-/* This file is for your main application css. */
+.zones li { font-size: 36pt; }
+
+.zones .off { color: black; }
+.zones .on { color: green; }
+.zones .unknown { color: grey; }

@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-lg-12">
     <h1>Zones</h1>
-    <ul>
+    <ul class="zones">
       <%= for zone <- @zones do %>
-        <li><%= zone.name %> - <%= zone.status %></li>
+        <li class="<%= zone.status %>"><%= zone.name %></li>
       <% end %>
     </ul>
   </div>
