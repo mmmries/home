@@ -14,4 +14,5 @@ defmodule Home.Zone do
 
   defp parse_status("off"), do: :off
   defp parse_status("on"), do: :on
+  defp parse_status("unknown"), do: :unknown
 end

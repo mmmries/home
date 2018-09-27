@@ -18,13 +18,13 @@ defmodule Home.ZoneTest do
     },
     %{
       "name"   => "zone4",
-      "status" => "off",
+      "status" => "unknown",
     }])
     assert parsed == [
       %Zone{name: "zone1", status: :on},
       %Zone{name: "zone2", status: :off},
       %Zone{name: "zone3", status: :off},
-      %Zone{name: "zone4", status: :off},
+      %Zone{name: "zone4", status: :unknown},
     ]
   end
 end
