@@ -1,8 +1,8 @@
 defmodule HomeWeb.PageController do
   use HomeWeb, :controller
+  import Texas.Controller
 
   def index(conn, _params) do
-    zones = Home.Zones.get()
-    render conn, "index.html", zones: zones
+    texas_render conn, "index.html", [texas: HomeWeb.PageView.data(conn)]
   end
 end

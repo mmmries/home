@@ -23,6 +23,12 @@ defmodule Home.Zones do
 
   def handle_call({:handle_message, "zone_status", %{"zones" => zones}}, _from, state) do
     zones = Home.Zone.parse(zones)
+    send self(), :notify_of_change
     {:reply, :ok, %{state | zones: zones}}
+  end
+
+  def handle_info(:notify_of_change, state) do
+    HomeWeb.Endpoint.broadcast("texas:diff:example_list", "", %{})
+    {:noreply, state}
   end
 end
