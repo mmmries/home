@@ -13,15 +13,33 @@ config :home, HomeWeb.Endpoint,
   pubsub: [name: Home.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configures Drab
+config :drab, HomeWeb.Endpoint,
+  otp_app: :home
+
+# Configures default Drab file extension
+config :phoenix, :template_engines,
+  drab: Drab.Live.Engine
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
-config :texas, pubsub: HomeWeb.Endpoint
-config :texas, router: HomeWeb.Router
-config :phoenix, :template_engines,
-  tex:  Texas.TemplateEngine
+config :home, :gnat_connection, %{
+    name: :gnat,
+    connection_settings: [
+      %{host: 'nats.riesd.com', port: 4223, tls: true, username: System.get_env("NATS_USER"), password: System.get_env("NATS_PASS")},
+    ]
+  }
+
+config :home, :gnat_consumer, %{
+    connection_name: :gnat,
+    consuming_function: {Home.Zones, :accept_update},
+    subscription_topics: [
+      %{topic: "sprinkler.zones.*", queue_group: "home.riesd.com"},
+    ],
+  }
 
 
 # Import environment specific config. This must remain at the bottom

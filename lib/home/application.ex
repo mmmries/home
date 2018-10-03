@@ -6,7 +6,10 @@ defmodule Home.Application do
 
     children = [
       supervisor(HomeWeb.Endpoint, []),
-      worker(Home.Zones, [[name: Home.Zones]]),
+      worker(Gnat.ConnectionSupervisor, [Application.get_env(:home, :gnat_connection)]),
+      worker(Gnat.ConsumerSupervisor, [Application.get_env(:home, :gnat_consumer)]),
+      supervisor(DynamicSupervisor, [[strategy: :one_for_one, name: :zones_supervisor]]),
+      worker(Registry, [[keys: :unique, name: :zones_registry]]),
     ]
 
     opts = [strategy: :one_for_one, name: Home.Supervisor]
