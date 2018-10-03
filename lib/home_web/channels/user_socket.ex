@@ -1,10 +1,8 @@
 defmodule HomeWeb.UserSocket do
   use Phoenix.Socket
-  use Texas.Socket
 
   ## Channels
   # channel "room:*", HomeWeb.RoomChannel
-  channel "sprinkler", HomeWeb.SprinklerChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

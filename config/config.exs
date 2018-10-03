@@ -33,11 +33,6 @@ config :home, :gnat_consumer, %{
     ],
   }
 
-config :texas, pubsub: HomeWeb.Endpoint
-config :texas, router: HomeWeb.Router
-config :phoenix, :template_engines,
-  tex:  Texas.TemplateEngine
-
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
