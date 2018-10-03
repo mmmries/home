@@ -3,6 +3,7 @@ defmodule HomeWeb.PageController do
   import Texas.Controller
 
   def index(conn, _params) do
-    texas_render conn, "index.html", [texas: HomeWeb.PageView.data(conn)]
+    conn
+    |> texas_render("index.html", [texas: HomeWeb.PageView.data(conn)])
   end
 end

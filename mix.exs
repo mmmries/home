@@ -34,6 +34,8 @@ defmodule Home.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:gettext, "~> 0.11"},
+      {:gnat, "~> 0.4"},
+      {:jason, "~> 1.1"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},

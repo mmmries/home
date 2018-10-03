@@ -18,6 +18,21 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :home, :gnat_connection, %{
+    name: :gnat,
+    connection_settings: [
+      %{host: 'nats.riesd.com', port: 4223, tls: true, username: System.get_env("NATS_USER"), password: System.get_env("NATS_PASS")},
+    ]
+  }
+
+config :home, :gnat_consumer, %{
+    connection_name: :gnat,
+    consuming_function: {Home.Zones, :accept_update},
+    subscription_topics: [
+      %{topic: "sprinkler.zones.*", queue_group: "home.riesd.com"},
+    ],
+  }
+
 config :texas, pubsub: HomeWeb.Endpoint
 config :texas, router: HomeWeb.Router
 config :phoenix, :template_engines,

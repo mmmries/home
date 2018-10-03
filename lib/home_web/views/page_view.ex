@@ -7,8 +7,8 @@ defmodule HomeWeb.PageView do
     }
   end
 
-  def example_list(_conn) do
-    zones = Home.Zones.get()
+  def example_list(%{path_params: %{"id" => id}}) do
+    zones = Home.Zones.get(id)
     lis = Enum.map(zones, fn(zone) ->
       "<li class=\"#{zone.status}\">#{zone.name}</li>"
     end) |> Enum.join()

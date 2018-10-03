@@ -17,7 +17,7 @@ defmodule HomeWeb.Router do
   scope "/", HomeWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/sprinklers/:id", PageController, :index
   end
 
   # Other scopes may use custom stacks.
