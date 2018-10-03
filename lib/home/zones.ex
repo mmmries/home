@@ -30,15 +30,15 @@ defmodule Home.Zones do
 
   def init(name) do
     Registry.register(@registry, name, self())
-    {:ok, %{zones: []}}
+    {:ok, %{name: name, zones: []}}
   end
 
   def handle_call(:get, _from, %{zones: zones}=state) do
     {:reply, zones, state}
   end
 
-  def handle_call({:zone_update, zones}, _from, state) do
-    HomeWeb.Endpoint.broadcast("texas:diff:example_list", "", %{})
+  def handle_call({:zone_update, zones}, _from, %{name: name}=state) do
+    Phoenix.PubSub.broadcast(Home.PubSub, "sprinklers.zones.#{name}", {:zone_update, zones})
     {:reply, :ok, %{state | zones: zones}}
   end
 end

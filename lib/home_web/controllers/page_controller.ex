@@ -3,6 +3,6 @@ defmodule HomeWeb.PageController do
 
   def index(conn, %{"id" => id}) do
     zones = Home.Zones.get(id)
-    render(conn, "index.html", [zones: zones])
+    render(conn, "index.html", [id: id, zones: zones])
   end
 end

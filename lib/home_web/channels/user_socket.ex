@@ -1,5 +1,6 @@
 defmodule HomeWeb.UserSocket do
   use Phoenix.Socket
+  use Drab.Socket
 
   ## Channels
   # channel "room:*", HomeWeb.RoomChannel
