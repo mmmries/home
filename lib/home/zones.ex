@@ -28,6 +28,16 @@ defmodule Home.Zones do
     GenServer.call({:via, Registry, {@registry, name}}, :get)
   end
 
+  def send_command(controller, command) do
+    topic = "sprinkler.commands.#{controller}"
+    case Gnat.request(:gnat, topic, Jason.encode!(command), receive_timeout: 5_000) do
+      {:ok, %{body: body}} ->
+        Jason.decode!(body)
+      {:error, :timeout} ->
+        %{"status" => 502, "message" => "timed out waiting for a response"}
+    end
+  end
+
   def init(name) do
     Registry.register(@registry, name, self())
     {:ok, %{name: name, zones: []}}
@@ -38,7 +48,7 @@ defmodule Home.Zones do
   end
 
   def handle_call({:zone_update, zones}, _from, %{name: name}=state) do
-    Phoenix.PubSub.broadcast(Home.PubSub, "sprinklers.zones.#{name}", {:zone_update, zones})
+    Phoenix.PubSub.broadcast(Home.PubSub, "sprinkler.zones.#{name}", {:zone_update, zones})
     {:reply, :ok, %{state | zones: zones}}
   end
 end

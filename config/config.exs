@@ -37,7 +37,7 @@ config :home, :gnat_consumer, %{
     connection_name: :gnat,
     consuming_function: {Home.Zones, :accept_update},
     subscription_topics: [
-      %{topic: "sprinkler.zones.*", queue_group: "home.riesd.com"},
+      %{topic: "sprinkler.zones.*", queue_group: "#{Mix.env}.home.riesd.com"},
     ],
   }
 
