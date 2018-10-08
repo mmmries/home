@@ -1,10 +1,16 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1>Zones - <%= @id %></h1>
-    <ul class='zones'>
-      <%= for zone <- @zones do %>
-        <li class='<%= zone.status %>'><%= zone.name %></li>
+    <form>
+      <input type="hidden" name="controller" value="<%= @id %>" />
+      <h1>Zones - <%= @id %> <input type="text" name="auth_token" placeholder="token" /></h1>
+      <%= if @status do %>
+        <h2 class="danger"><%= @status %></h2>
       <% end %>
-    </ul>
+      <ul class='zones'>
+        <%= for zone <- @zones do %>
+          <li class='<%= zone.status %>' drab="click:toggle" id="<%= zone.name %>"><%= zone.name %></li>
+        <% end %>
+      </ul>
+    </form>
   </div>
 </div>
