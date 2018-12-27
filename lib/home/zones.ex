@@ -15,6 +15,11 @@ defmodule Home.Zones do
     GenServer.call(pid, {:zone_update, zones})
   end
 
+  def handle_update(name, zones) do
+    {:ok, pid} = ensure_running(name)
+    GenServer.call(pid, {:zone_update, zones})
+  end
+
   def ensure_running(name) do
     case Registry.lookup(@registry, name) do
       [] ->
@@ -30,12 +35,14 @@ defmodule Home.Zones do
 
   def send_command(controller, command) do
     topic = "sprinkler.commands.#{controller}"
-    case Gnat.request(:gnat, topic, Jason.encode!(command), receive_timeout: 5_000) do
-      {:ok, %{body: body}} ->
-        Jason.decode!(body)
-      {:error, :timeout} ->
-        %{"status" => 502, "message" => "timed out waiting for a response"}
-    end
+
+    # TODO: Figure out how to send a message back down to the client
+    #case Gnat.request(:gnat, topic, Jason.encode!(command), receive_timeout: 5_000) do
+    #  {:ok, %{body: body}} ->
+    #    Jason.decode!(body)
+    #  {:error, :timeout} ->
+    #    %{"status" => 502, "message" => "timed out waiting for a response"}
+    #end
   end
 
   def init(name) do
