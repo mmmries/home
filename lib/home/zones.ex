@@ -13,9 +13,13 @@ defmodule Home.Zones do
     GenServer.call(__MODULE__, :get)
   end
 
+  def response_status(message) do
+    Phoenix.PubSub.broadcast(Home.PubSub, "sprinkler.zones", {:response_status, message})
+  end
+
   @spec send_command(String.t(), String.t(), String.t()) :: :ok | {:error, term()}
   def send_command(command, zone, auth_token) do
-    HomeWeb.Endpoint.broadcast("sprinkler", command, %{"zone" => zone, "auth_token" => auth_token})
+    HomeWeb.Endpoint.broadcast("sprinkler", "command", %{"zone" => zone, "auth_token" => auth_token, "type" => command})
   end
 
   def init(nil) do
