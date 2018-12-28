@@ -5,9 +5,9 @@ defmodule HomeWeb.SprinklerChannel do
     {:ok, socket}
   end
 
-  def handle_in(event, %{"zones" => zones}, socket) do
+  def handle_in("zone_status", %{"zones" => zones}, socket) do
     zones = Home.Zone.parse(zones)
-    reply = Home.Zones.handle_update("mmmries", zones)
+    reply = Home.Zones.handle_update(zones)
     {:reply, reply, socket}
   end
 end

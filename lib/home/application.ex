@@ -6,8 +6,7 @@ defmodule Home.Application do
 
     children = [
       supervisor(HomeWeb.Endpoint, []),
-      supervisor(DynamicSupervisor, [[strategy: :one_for_one, name: :zones_supervisor]]),
-      worker(Registry, [[keys: :unique, name: :zones_registry]]),
+      {Home.Zones, nil},
     ]
 
     opts = [strategy: :one_for_one, name: Home.Supervisor]
