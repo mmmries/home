@@ -1,4 +1,4 @@
-FROM hqmq/alpine-elixir:1.6.0
+FROM hqmq/alpine-elixir:1.7.4.0
 MAINTAINER Michael Ries <riesmmm@gmail.com>
 
 EXPOSE 4000

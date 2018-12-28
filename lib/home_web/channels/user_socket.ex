@@ -4,6 +4,7 @@ defmodule HomeWeb.UserSocket do
 
   ## Channels
   # channel "room:*", HomeWeb.RoomChannel
+  channel "sprinkler", HomeWeb.SprinklerChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

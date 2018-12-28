@@ -4,34 +4,39 @@ defmodule HomeWeb.PageCommander do
 
   onconnect :connected
   def connected(socket) do
-    {:ok, id} = peek(socket, :id)
-    Phoenix.PubSub.subscribe(Home.PubSub, "sprinkler.zones.#{id}")
+    Phoenix.PubSub.subscribe(Home.PubSub, "sprinkler.zones")
     zone_update_loop(socket)
   end
 
   defp zone_update_loop(socket) do
     receive do
       {:zone_update, zones} -> poke(socket, zones: zones)
+      {:response_status, message} -> poke(socket, status: message)
       other ->
         Logger.error("#{__MODULE__} received unexpected message #{inspect(other)}")
     end
     zone_update_loop(socket)
   end
 
-  defhandler toggle(socket, event) do
-    {controller, command} = build_command(event) |> IO.inspect()
-    case Home.Zones.send_command(controller, command) do
-      %{"status" => 200} ->
-        socket |> poke(status: "👍")
-      %{"message" => message} ->
-        socket |> poke(status: "Error: #{message}")
+  defhandler nudge(socket, event) do
+    %{"form" => %{"auth_token" => auth_token}} = event
+    case Home.Zones.send_command("nudge", nil, auth_token) do
+      :ok ->
+        socket
+      {:error, reason} ->
+        socket |> poke(status: "Error: #{inspect(reason)}")
     end
   end
 
-  defp build_command(%{"id" => zone, "form" => form, "class" => class}) do
-    %{"controller" => controller, "auth_token" => auth_token} = form
-    msg = %{type: type(class), zone: zone, auth_token: auth_token}
-    {controller, msg}
+  defhandler toggle(socket, event) do
+    %{"id" => zone, "form" => form, "class" => class} = event
+    %{"auth_token" => auth_token} = form
+    case Home.Zones.send_command(type(class), zone, auth_token) do
+      :ok ->
+        socket
+      {:error, reason} ->
+        socket |> poke(status: "Error: #{inspect(reason)}")
+    end
   end
 
   defp type("on"), do: "turn_off"
