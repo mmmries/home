@@ -1,5 +1,26 @@
 .danger { color: red; }
 
+.door {
+  height: 200px;
+  border: 2px solid darkgrey;
+  border-radius: 10px;
+}
+.door.closed {
+  background-color: rgb(210, 180, 140);
+}
+.door.unknown {
+  background-color: grey;
+}
+.door .name {
+  font-size: 24px;
+  text-align: center;
+}
+.door .status {
+  font-size: 16px;
+  font-family: ruboto;
+  text-align: center;
+}
+
 .zones li { font-size: 36pt; }
 
 .zones .off { color: black; }
