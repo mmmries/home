@@ -7,6 +7,10 @@ defmodule Home.Application do
     children = [
       supervisor(HomeWeb.Endpoint, []),
       {Home.Zones, nil},
+      {Home.GarageDoors, [
+        %Home.GarageDoor{name: "big", status: :unknown},
+        %Home.GarageDoor{name: "small", status: :unknown},
+      ]}
     ]
 
     opts = [strategy: :one_for_one, name: Home.Supervisor]
