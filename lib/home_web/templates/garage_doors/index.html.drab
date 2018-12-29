@@ -1,0 +1,17 @@
+<form>
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>
+        Doors
+      </h1>  
+    </div>
+  </div>
+  <div class="row garage-doors">
+    <%= for door <- @doors do %>
+      <div class="door <%= door.status %> <%= door_name_to_col_size(door.name) %>">
+        <div class="name"><%= door.name %></div>
+        <div class="status"><%= door.status %></div>
+      </div>
+    <% end %>
+  </div>
+</form>
