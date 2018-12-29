@@ -4,6 +4,7 @@ defmodule HomeWeb.UserSocket do
 
   ## Channels
   # channel "room:*", HomeWeb.RoomChannel
+  channel "garage_doors", HomeWeb.GarageDoorsChannel
   channel "sprinkler", HomeWeb.SprinklerChannel
 
   ## Transports
