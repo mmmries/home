@@ -1,17 +1,18 @@
 defmodule Home.GarageDoors do
   use GenServer
   require Logger
+  alias Home.GarageDoor
 
   def start_link(doors, opts \\ [name: __MODULE__]) do
     GenServer.start_link(__MODULE__, doors, opts)
   end
 
-  @spec get(GenServer.server()) :: list(Home.GarageDoor.t())
+  @spec get(GenServer.server()) :: list(GarageDoor.t())
   def get(name_or_pid \\ __MODULE__) do
     GenServer.call(name_or_pid, :get)
   end
 
-  @spec doors_update(GenServer.server(), list(Home.GarageDoor.t())) :: :ok
+  @spec doors_update(GenServer.server(), list(GarageDoor.t())) :: :ok
   def doors_update(server \\ __MODULE__, doors) do
     GenServer.call(server, {:doors_update, doors})
   end
@@ -33,6 +34,15 @@ defmodule Home.GarageDoors do
   end
   def handle_call({:doors_update, doors}, _from, state) do
     Phoenix.PubSub.broadcast(Home.PubSub, "garage_doors.ui", {:doors_update, doors})
+    door_change(state.doors, doors)
     {:reply, :ok, %{state | doors: doors}}
+  end
+
+  defp door_change(doors, doors), do: :no_op
+  defp door_change(_old_doors, new_doors) do
+    message = new_doors
+              |> Enum.map(fn(%GarageDoor{}=door) -> "#{door.name}: #{door.status}" end)
+              |> Enum.join("\n")
+    Home.Notification.send_to_all_subscribed("Garage Doors", message)
   end
 end
