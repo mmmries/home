@@ -35,6 +35,7 @@ defmodule Home.Mixfile do
       {:cowboy, "~> 1.0"},
       {:drab, "~> 0.9.3"},
       {:gettext, "~> 0.11"},
+      {:httpoison, "~> 1.5"},
       {:jason, "~> 1.1"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_html, "~> 2.10"},
