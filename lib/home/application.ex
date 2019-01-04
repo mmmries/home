@@ -10,7 +10,8 @@ defmodule Home.Application do
       {Home.GarageDoors, [
         %Home.GarageDoor{name: "big", status: :unknown},
         %Home.GarageDoor{name: "small", status: :unknown},
-      ]}
+      ]},
+      {Task.Supervisor, name: Home.Notification}
     ]
 
     opts = [strategy: :one_for_one, name: Home.Supervisor]
