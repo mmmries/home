@@ -47,3 +47,5 @@ config :logger, :console, format: "[$level] $message\n"
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
+
+config :one_signal, :app_id, "8de22e6c-bc4d-46c4-92ed-e79be083b6ce"

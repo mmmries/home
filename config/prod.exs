@@ -60,6 +60,8 @@ config :logger, level: :info
 #     config :home, HomeWeb.Endpoint, server: true
 #
 
+config :one_signal, :app_id, "da6eda76-e656-493d-a42f-5f7482d3786b"
+
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 import_config "prod.secret.exs"
