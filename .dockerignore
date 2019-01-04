@@ -2,3 +2,4 @@
 deps
 _build
 assets/node_modules
+.env

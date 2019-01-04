@@ -15,7 +15,7 @@
       var OneSignal = window.OneSignal || [];
       OneSignal.push(function() {
         OneSignal.init({
-          appId: "<%= Application.get_env(:one_signal, :app_id) %>",
+          appId: "<%= Application.get_env(:home, :one_signal_app_id) %>",
         });
       });
     </script>

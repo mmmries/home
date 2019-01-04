@@ -48,4 +48,5 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :one_signal, :app_id, "8de22e6c-bc4d-46c4-92ed-e79be083b6ce"
+config :home, :one_signal_app_id, "8de22e6c-bc4d-46c4-92ed-e79be083b6ce"
+config :home, :one_signal_api_key, System.get_env("ONE_SIGNAL_API_KEY")
