@@ -9,4 +9,4 @@ ENV MIX_ENV=prod
 ENV PORT=4000
 RUN mix do deps.get, compile, phx.digest
 
-CMD elixir --no-halt --cookie $COOKIE --name home@localhost -S mix
+CMD elixir --no-halt --cookie $COOKIE --name $NAME -S mix phx.server
